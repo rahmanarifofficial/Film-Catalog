@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Film Catalog</string>
+    <string name="label_poster">poster</string>
+
+    <!-- CONNECTION PROBLEM -->
+    <string name="failed_connect">
+        <![CDATA[
+        Oops there is problem when try connect to server, please wait a moment or recheck your internet connections.
+        ]]>
+    </string>
+    <string name="label_refresh">refresh</string>
 </resources>
