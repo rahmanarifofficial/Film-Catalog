@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.rahmanarifofficial.filmcatalog.R
 import com.rahmanarifofficial.filmcatalog.model.Film
 import kotlinx.android.extensions.LayoutContainer
@@ -27,7 +28,7 @@ class ListFilmAdapter(
         ) {
             Glide.with(context)
                 .load(item.poster)
-                .apply { centerCrop() }
+                .apply { RequestOptions().centerCrop().placeholder(R.drawable.ic_video) }
                 .into(ivPosterFilm)
             tvTitleFilm.text = item.title
             tvTypeFilm.text = item.type

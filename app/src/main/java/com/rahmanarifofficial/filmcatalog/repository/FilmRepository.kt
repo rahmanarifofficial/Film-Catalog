@@ -3,6 +3,7 @@ package com.rahmanarifofficial.filmcatalog.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.rahmanarifofficial.filmcatalog.BuildConfig
+import com.rahmanarifofficial.filmcatalog.model.Film
 import com.rahmanarifofficial.filmcatalog.model.ResponseSearchFilm
 import com.rahmanarifofficial.filmcatalog.network.DataSource
 import retrofit2.Call
@@ -14,7 +15,7 @@ class FilmRepository {
 
     fun getListFilm(keyword: String, page: Int): MutableLiveData<ResponseSearchFilm> {
         val listFilm = MutableLiveData<ResponseSearchFilm>()
-        service.getListFilm(BuildConfig.OMDB_API_KEY, keyword, page)
+        service.searchFilm(BuildConfig.OMDB_API_KEY, keyword, page)
             .enqueue(object : Callback<ResponseSearchFilm> {
                 override fun onFailure(call: Call<ResponseSearchFilm>, t: Throwable) {
                     listFilm.value = null
@@ -33,5 +34,19 @@ class FilmRepository {
 
             })
         return listFilm
+    }
+
+    fun getDetailFilm(id: String): MutableLiveData<Film> {
+        val film = MutableLiveData<Film>()
+        service.getDetailFilm(BuildConfig.OMDB_API_KEY, id).enqueue(object : Callback<Film>{
+            override fun onFailure(call: Call<Film>, t: Throwable) {
+                film.value = null
+            }
+
+            override fun onResponse(call: Call<Film>, response: Response<Film>) {
+                film.value = response.body()
+            }
+        })
+        return film
     }
 }

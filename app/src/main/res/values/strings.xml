@@ -9,4 +9,7 @@
         ]]>
     </string>
     <string name="label_refresh">refresh</string>
+    <string name="label_plot">Plot</string>
+    <string name="label_production">Production</string>
+    <string name="hint_search_film">Cari Film</string>
 </resources>

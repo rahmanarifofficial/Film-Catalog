@@ -19,6 +19,9 @@ data class Film(
     @SerializedName("Genre")
     @Expose
     var genre: String? = null,
+    @SerializedName("Runtime")
+    @Expose
+    var runtime: String? = null,
     @SerializedName("Director")
     @Expose
     var director: String? = null,
@@ -43,6 +46,9 @@ data class Film(
     @SerializedName("imdbRating")
     @Expose
     var rating: String? = null,
+    @SerializedName("Production")
+    @Expose
+    var production: String? = null,
     @SerializedName("Type")
     @Expose
     var type: String? = null,

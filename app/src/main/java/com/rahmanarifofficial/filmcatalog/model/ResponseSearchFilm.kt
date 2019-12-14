@@ -7,5 +7,8 @@ data class ResponseSearchFilm(
     var search : List<Film>? = null,
 
     @SerializedName("Response")
-    var response: Boolean = false
+    var response: Boolean = false,
+
+    @SerializedName("Error")
+    var error: String? = null
 )
