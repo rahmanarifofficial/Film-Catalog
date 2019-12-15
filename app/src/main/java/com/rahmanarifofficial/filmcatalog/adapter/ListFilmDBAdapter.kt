@@ -8,23 +8,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.rahmanarifofficial.filmcatalog.R
-import com.rahmanarifofficial.filmcatalog.model.Film
+import com.rahmanarifofficial.filmcatalog.db.FilmDB
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_list_film.*
 
-class ListFilmAdapter(
+class ListFilmDBAdapter(
     private val context: Context,
-    private val itemList: List<Film>,
-    private val onItemClick: ((Film) -> Unit)? = null
-) : RecyclerView.Adapter<ListFilmAdapter.DefaultViewHolder>() {
+    private val itemList: List<FilmDB>,
+    private val onItemClick: ((FilmDB) -> Unit)? = null
+) : RecyclerView.Adapter<ListFilmDBAdapter.DefaultViewHolder>() {
 
     inner class DefaultViewHolder(override val containerView: View) :
         RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
         fun bindItem(
-            item: Film,
-            onItemClick: ((Film) -> Unit)? = null
+            item: FilmDB,
+            onItemClick: ((FilmDB) -> Unit)? = null
         ) {
             Glide.with(context)
                 .load(item.poster)

@@ -12,4 +12,8 @@
     <string name="label_plot">Plot</string>
     <string name="label_production">Production</string>
     <string name="hint_search_film">Cari Film</string>
+    <string name="tambah_favorite">Berhasil menambahkan ke favorite</string>
+    <string name="hapus_favorite">Berhasil Menghapus dari Favorite</string>
+    <string name="empty_list">Tidak Ada Favorites</string>
+    <string name="list_favorite">Favorites</string>
 </resources>

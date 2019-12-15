@@ -9,6 +9,9 @@ data class ResponseSearchFilm(
     @SerializedName("Response")
     var response: Boolean = false,
 
+    @SerializedName("totalResults")
+    var totalResults: Int? = null,
+
     @SerializedName("Error")
     var error: String? = null
 )

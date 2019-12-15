@@ -13,9 +13,9 @@ import retrofit2.Response
 class FilmRepository {
     private val service = DataSource.Private.service
 
-    fun getListFilm(keyword: String, page: Int): MutableLiveData<ResponseSearchFilm> {
+    fun getListFilm(keyword: String): MutableLiveData<ResponseSearchFilm> {
         val listFilm = MutableLiveData<ResponseSearchFilm>()
-        service.searchFilm(BuildConfig.OMDB_API_KEY, keyword, page)
+        service.searchFilm(BuildConfig.OMDB_API_KEY, keyword)
             .enqueue(object : Callback<ResponseSearchFilm> {
                 override fun onFailure(call: Call<ResponseSearchFilm>, t: Throwable) {
                     listFilm.value = null

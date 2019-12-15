@@ -17,7 +17,7 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar_detail_film"
+            android:id="@+id/collapsingToolbarDetailFilm"
             android:layout_width="match_parent"
             android:layout_height="256dp"
             android:fitsSystemWindows="true"
@@ -28,6 +28,7 @@
                 android:id="@+id/ivPosterFilm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/label_poster"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_video"
@@ -52,6 +53,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/successLyt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -73,30 +75,66 @@
                 android:textSize="15sp"
                 tools:text="Romance" />
 
-            <TextView
-                android:id="@+id/tvYearFilm"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:textSize="15sp" />
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="2dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCompatPadding="true">
+                android:orientation="horizontal"
+                android:weightSum="3">
 
                 <TextView
-                    android:id="@+id/tvPlotFilm"
-                    android:layout_width="match_parent"
+                    android:id="@+id/tvReleaseFilm"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    tools:text="@string/failed_connect" />
-            </androidx.cardview.widget.CardView>
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_date"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp"
+                    tools:targetApi="m"
+                    tools:text="2011" />
+
+                <TextView
+                    android:id="@+id/tvRuntimeFilm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_time"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp"
+                    tools:targetApi="m"
+                    tools:text="2011" />
+
+                <TextView
+                    android:id="@+id/tvRatingFilm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/ic_star_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/colorAccent"
+                    android:gravity="center"
+                    android:padding="5dp"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="13sp"
+                    tools:targetApi="m"
+                    tools:text="2011" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPlotFilm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="15sp"
+                tools:text="@string/failed_connect" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,4 +161,39 @@
         android:tint="@android:color/white"
         app:layout_anchor="@+id/appbar_detail_film"
         app:layout_anchorGravity="bottom|right|end" />
+
+    <RelativeLayout
+        android:id="@+id/errorLyt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_above="@id/tvError"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_error_connection" />
+
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/failed_connect"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bg_rounded_blue"
+            android:text="@string/label_refresh"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,6 +3,9 @@ package com.rahmanarifofficial.filmcatalog
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.rahmanarifofficial.filmcatalog.adapter.ListFilmAdapter
 import com.rahmanarifofficial.filmcatalog.model.Film
 import com.rahmanarifofficial.filmcatalog.viewmodel.FilmViewModel
@@ -31,11 +35,24 @@ class MainActivity : AppCompatActivity() {
     private var lastKeywords = ""
 
     private var keyword = "america"
-    private var page = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorites_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_to_favorite -> {
+                startActivity<FavoritesActivity>()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun init() {
@@ -53,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUI() {
         swipeLayout?.post {
-            loadData(page)
+            loadData()
         }
         rvListFilm?.layoutManager = LinearLayoutManager(this)
         rvListFilm?.adapter = adapter
@@ -133,19 +150,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun refresh() {
         itemList.clear()
         adapter.notifyDataSetChanged()
-        loadData(page)
+        loadData()
     }
 
-    fun loadData(page: Int) {
+    fun loadData() {
         swipeLayout?.isRefreshing = true
-        vm.getListFilm(page).observe(this, Observer {
+        shimmerLyt?.startShimmer()
+        vm.getListFilm().observe(this, Observer {
             it?.let { res ->
                 if (res.response) {
                     res.search?.let { data ->
+                        shimmerLyt?.stopShimmer()
+                        shimmerLyt?.visibility = View.GONE
+                        successLyt?.visibility = View.VISIBLE
                         swipeLayout?.isRefreshing = false
                         itemList.clear()
                         itemList.addAll(data)
@@ -154,18 +174,27 @@ class MainActivity : AppCompatActivity() {
                         rvListFilm?.visibility = View.VISIBLE
                     }
                 } else {
+                    shimmerLyt?.stopShimmer()
+                    shimmerLyt?.visibility = View.GONE
+                    successLyt?.visibility = View.VISIBLE
                     swipeLayout?.isRefreshing = false
                     tvError?.text = res.error
                     errorLyt?.visibility = View.VISIBLE
                     rvListFilm?.visibility = View.GONE
                 } ?: apply {
+                    shimmerLyt?.stopShimmer()
+                    shimmerLyt?.visibility = View.GONE
+                    successLyt?.visibility = View.VISIBLE
                     swipeLayout?.isRefreshing = false
                     tvError?.text = res.error
                     errorLyt?.visibility = View.VISIBLE
                     rvListFilm?.visibility = View.GONE
                 }
             } ?: apply {
-                swipeLayout?.isRefreshing = true
+                shimmerLyt?.stopShimmer()
+                shimmerLyt?.visibility = View.GONE
+                successLyt?.visibility = View.VISIBLE
+                swipeLayout?.isRefreshing = false
                 errorLyt?.visibility = View.VISIBLE
                 rvListFilm?.visibility = View.GONE
             }

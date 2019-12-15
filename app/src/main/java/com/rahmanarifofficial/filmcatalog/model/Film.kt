@@ -54,5 +54,8 @@ data class Film(
     var type: String? = null,
     @SerializedName("Response")
     @Expose
-    var response: String? = null
+    var response: Boolean = false,
+    @SerializedName("Error")
+    @Expose
+    var error: String? = null
 )

@@ -53,7 +53,7 @@
                 tools:text="Type Film" />
 
             <TextView
-                android:id="@+id/tvYearFilm"
+                android:id="@+id/tvReleaseFilm"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
