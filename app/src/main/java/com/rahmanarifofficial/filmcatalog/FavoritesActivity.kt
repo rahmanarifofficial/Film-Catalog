@@ -58,12 +58,12 @@ class FavoritesActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
-        itemList.clear()
         adapter.notifyDataSetChanged()
         showFavorite()
     }
 
     private fun showFavorite() {
+        itemList.clear()
         swipeLayout?.isRefreshing = true
         database.use {
             val result = select(FilmDB.TABLE_FILM)
@@ -80,6 +80,11 @@ class FavoritesActivity : AppCompatActivity() {
                 rvListFilm?.visibility = View.GONE
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        refresh()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
