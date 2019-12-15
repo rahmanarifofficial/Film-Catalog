@@ -16,10 +16,12 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.rahmanarifofficial.filmcatalog.adapter.ListFilmAdapter
+import com.rahmanarifofficial.filmcatalog.helper.EndlessOnScrollListener
 import com.rahmanarifofficial.filmcatalog.model.Film
 import com.rahmanarifofficial.filmcatalog.viewmodel.FilmViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private var lastKeywords = ""
 
     private var keyword = "america"
+    private var currentPage = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -47,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_to_favorite -> {
                 startActivity<FavoritesActivity>()
             }
@@ -76,6 +79,12 @@ class MainActivity : AppCompatActivity() {
         rvListFilm?.adapter = adapter
         rvListFilm?.setHasFixedSize(true)
         rvListFilm?.itemAnimator = DefaultItemAnimator()
+        rvListFilm?.addOnScrollListener(object : EndlessOnScrollListener() {
+            override fun onLoadMore() {
+                currentPage++
+                loadData()
+            }
+        })
     }
 
     private fun eventUI() {
@@ -151,6 +160,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
+        currentPage = 1
         itemList.clear()
         adapter.notifyDataSetChanged()
         loadData()
@@ -159,7 +169,7 @@ class MainActivity : AppCompatActivity() {
     fun loadData() {
         swipeLayout?.isRefreshing = true
         shimmerLyt?.startShimmer()
-        vm.getListFilm().observe(this, Observer {
+        vm.getListFilm(currentPage).observe(this, Observer {
             it?.let { res ->
                 if (res.response) {
                     res.search?.let { data ->
@@ -167,7 +177,7 @@ class MainActivity : AppCompatActivity() {
                         shimmerLyt?.visibility = View.GONE
                         successLyt?.visibility = View.VISIBLE
                         swipeLayout?.isRefreshing = false
-                        itemList.clear()
+//                        itemList.clear()
                         itemList.addAll(data)
                         adapter.notifyDataSetChanged()
                         errorLyt?.visibility = View.GONE

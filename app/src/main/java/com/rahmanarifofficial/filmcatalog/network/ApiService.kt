@@ -13,7 +13,8 @@ interface ApiService {
     @GET(".")
     fun searchFilm(
         @Query("apikey") apikey: String,
-        @Query("s") keyword: String
+        @Query("s") keyword: String,
+        @Query("page") page: Int
     ): Call<ResponseSearchFilm>
 
     @GET(".")

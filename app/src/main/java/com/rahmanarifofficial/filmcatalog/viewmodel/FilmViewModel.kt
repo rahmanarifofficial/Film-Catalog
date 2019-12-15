@@ -14,8 +14,8 @@ class FilmViewModel(application: Application) : AndroidViewModel(application) {
         this.searchKeyword.value = "america"
     }
 
-    fun getListFilm() = Transformations.switchMap(searchKeyword) {
-        repository.getListFilm(it)
+    fun getListFilm(page: Int) = Transformations.switchMap(searchKeyword) {
+        repository.getListFilm(it, page)
     }
 
     fun getDetailFilm(id: String) = repository.getDetailFilm(id)
